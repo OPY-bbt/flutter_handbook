@@ -18,29 +18,34 @@ class GroupCard extends StatelessWidget {
 
   GroupCard(this.group);
 
-  Widget _buildItem(BuildContext context, route) {
+  Widget _buildItem(BuildContext context, MyRoute route) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            FlutterLogo(
-              size: 80,
-            ),
-            Row(
-              children: <Widget>[
-                Text(
-                  route.title,
-                  style: Theme.of(context).textTheme.title,
-                ),
-              ],
-            ),
-            Text(
-              route.description,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 3,
-            ),
-          ],
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, route.path);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              FlutterLogo(
+                size: 80,
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                    route.title,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ],
+              ),
+              Text(
+                route.description,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -48,10 +53,11 @@ class GroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var routes = group.routes;
+    final List<MyRoute> routes = group.routes;
 
     return Container(
       color: Colors.white,
+      padding: EdgeInsets.only(bottom: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -71,7 +77,7 @@ class GroupCard extends StatelessWidget {
               shrinkWrap: true,
               crossAxisCount: 2,
               children: <Widget>[
-                for (final route in routes) _buildItem(context, route),
+                for (MyRoute route in routes) _buildItem(context, route),
               ],
             ),
           )
