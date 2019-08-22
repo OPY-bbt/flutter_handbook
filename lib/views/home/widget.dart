@@ -53,7 +53,8 @@ class GroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<MyRoute> routes = group.routes;
+    final List<MyRoute> routes =
+        group.routes.where((r) => r.path.endsWith("_list")).toList();
 
     return Container(
       color: Colors.white,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './views/widgets/layouts_align_list.dart';
+import './layouts/widget_property_list.dart';
+import './views/widgets/layout_align_alignment.dart';
 
 class RouteGroup {
   final String groupName;
@@ -16,7 +17,7 @@ class RouteGroup {
 
 class MyRoute {
   final String title;
-  final List<Route> routes;
+  final List<MyRoute> routes;
   final Widget child;
   final String description;
   final String path;
@@ -37,8 +38,21 @@ class RouteWidget extends StatelessWidget {
     @required this.route,
   });
 
+  isSameGroup(MyRoute r) {
+    var groupName = route.path.replaceFirst("_list", "");
+    return r.path.startsWith(groupName);
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (route.path.endsWith("_list")) {
+      return WidgetPropertyList(
+          title: route.title,
+          routes: allRoutes
+              .where((v) => (isSameGroup(v) && !v.path.endsWith("_list")))
+              .toList());
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text(route.title)),
       body: route.child,
@@ -46,6 +60,7 @@ class RouteWidget extends StatelessWidget {
   }
 }
 
+// path以_list表示属性列表页
 const widget_routes = <RouteGroup>[
   RouteGroup(
     groupName: 'Layouts',
@@ -56,7 +71,12 @@ const widget_routes = <RouteGroup>[
         path: '/layout_align_list',
         description:
             "A widget that aligns its child within itself and optionally  widget that aligns its child within itself and optionally sizes itself based on the child's size.",
-        child: AlignList(),
+      ),
+      MyRoute(
+        title: 'Align-alignment',
+        path: '/layout_align_alignment',
+        description: "How to align the child.",
+        child: AlignAlignment(),
       ),
     ],
   ),

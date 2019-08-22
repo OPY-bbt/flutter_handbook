@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AlignList extends StatelessWidget {
-  const AlignList({Key key}) : super(key: key);
+class AlignAlignment extends StatelessWidget {
+  const AlignAlignment({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
